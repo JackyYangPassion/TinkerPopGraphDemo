@@ -15,17 +15,28 @@
     </properties>
 
     <dependencies>
+
+        <!--for tinkergraph dependency-->
         <dependency>
             <groupId>org.apache.tinkerpop</groupId>
             <artifactId>tinkergraph-gremlin</artifactId>
             <version>3.6.4</version>
         </dependency>
 
+        <!--for hgraphdb dependency-->
         <dependency>
             <groupId>io.hgraphdb</groupId>
             <artifactId>hgraphdb</artifactId>
             <version>3.2.0</version>
         </dependency>
+
+        <!--for hugegraph1.0.0 dependency-->
+        <dependency>
+            <groupId>org.apache.hugegraph</groupId>
+            <artifactId>hugegraph-client</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+
     </dependencies>>
 
 </project>
