@@ -9,8 +9,9 @@ import static org.apache.tinkerpop.gremlin.process.traversal.AnonymousTraversalS
 public class IndexSpeedTest {
     public static void main(String[] args) throws Exception {
         //without index
-        Graph graph = TinkerGraph.open();
-        GraphTraversalSource g = traversal().withEmbedded(graph);
+
+        Graph graph = TinkerGraph.open();//创建图
+        GraphTraversalSource g = traversal().withEmbedded(graph);//创建Process Traversal
         g.io("data/grateful-dead.xml").read().iterate();
         long start_time = System.currentTimeMillis();
         g.V().has("name","Garcia").values("name").forEachRemaining(System.out::println) ;
@@ -22,6 +23,11 @@ public class IndexSpeedTest {
         graph = TinkerGraph.open();
         g = traversal().withEmbedded(graph);
         ((TinkerGraph) graph).createIndex("name", Vertex.class);
+        System.out.println(((TinkerGraph)graph).getIndexedKeys(Vertex.class));
+        /**
+         * 创建索引后，如何写入索引？
+         *
+         */
         g.io("data/grateful-dead.xml").read().iterate();
         start_time = System.currentTimeMillis();
         g.V().has("name","Garcia").iterate().forEachRemaining(System.out::println);

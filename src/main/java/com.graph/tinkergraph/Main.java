@@ -15,8 +15,10 @@ import static org.apache.tinkerpop.gremlin.process.traversal.AnonymousTraversalS
  */
 public class Main {
     public static void main(String[] args) throws Exception {
-        Graph graph = TinkerGraph.open();
-        GraphTraversalSource g = traversal().withEmbedded(graph);
+        //根据框架解释 TinkerPop 执行逻辑
+        Graph graph = TinkerGraph.open();//创建图
+        //GraphTraversalSource g = traversal().withEmbedded(graph);
+        GraphTraversalSource g  = graph.traversal();//创建遍历器
 
         //add Vertex and Edge
         Vertex marko = g.addV("person").property("name","marko").property("age",29).next();
