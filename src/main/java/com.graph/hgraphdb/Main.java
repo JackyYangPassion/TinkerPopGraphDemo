@@ -4,6 +4,7 @@ import io.hgraphdb.ElementType;
 import io.hgraphdb.HBaseGraph;
 import io.hgraphdb.HBaseGraphConfiguration;
 import org.apache.commons.configuration2.Configuration;
+import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversalSource;
 import org.apache.tinkerpop.gremlin.structure.Edge;
 import org.apache.tinkerpop.gremlin.structure.T;
 import org.apache.tinkerpop.gremlin.structure.Vertex;
@@ -53,6 +54,10 @@ public class Main {
             System.out.println(e.id() + ":" + e.label() + ":" + e.inVertex().id() + ":" + e.outVertex().id());
         }
 
+        //通过GraphTraversal查询 && 支持什么算子？
+        GraphTraversalSource g  = graph.traversal();//创建遍历器
+
+        g.V().has("name", "John").forEachRemaining(System.out::println);
 
         graph.close();
         System.exit(0);

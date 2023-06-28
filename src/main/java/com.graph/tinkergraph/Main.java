@@ -29,7 +29,5 @@ public class Main {
         g.V().has("name","marko").out("created").values("name").forEachRemaining(System.out::println);
 
         graph.close();
-
-
     }
 }
