@@ -1,9 +1,9 @@
 package com.graph.basicalgostructure;
 
-public class LInkList {
+public class LinkList {
     //你是一名程序员，请用java 实现双向链表遍历。
     public static void main(String[] args) {
-        LInkList lInkList = new LInkList();
+        LinkList lInkList = new LinkList();
         Node head = lInkList.createLinkList();
         lInkList.traverseLinkList(head);
     }
