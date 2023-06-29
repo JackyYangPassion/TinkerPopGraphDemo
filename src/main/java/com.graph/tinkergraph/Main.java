@@ -1,6 +1,9 @@
 package com.graph.tinkergraph;
 
+import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversal;
 import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversalSource;
+import org.apache.tinkerpop.gremlin.process.traversal.util.TraversalExplanation;
+import org.apache.tinkerpop.gremlin.process.traversal.util.TraversalMetrics;
 import org.apache.tinkerpop.gremlin.structure.Graph;
 import org.apache.tinkerpop.gremlin.structure.Vertex;
 import org.apache.tinkerpop.gremlin.tinkergraph.structure.TinkerGraph;
@@ -20,13 +23,56 @@ public class Main {
         //GraphTraversalSource g = traversal().withEmbedded(graph);
         GraphTraversalSource g  = graph.traversal();//创建遍历器
 
-        //add Vertex and Edge
-        Vertex marko = g.addV("person").property("name","marko").property("age",29).next();
-        Vertex lop = g.addV("software").property("name","lop").property("lang","java").next();
-        g.addE("created").from(marko).to(lop).property("weight",0.6d).iterate();
+        //add Vertex/Edge by Graph API use github compilot
+        // 通过 API 直接操作图 便于查询调试
+        Vertex a = graph.addVertex("name","alice");
+        Vertex b = graph.addVertex("name","bobby");
+        Vertex c = graph.addVertex("name","cindy");
+        Vertex d = graph.addVertex("name","david");
+        Vertex e = graph.addVertex("name","eliza");
+        a.addEdge("rates",b,"tag","ruby","value",9);
+        b.addEdge("rates",c,"tag","ruby","value",8);
+        c.addEdge("rates",d,"tag","ruby","value",7);
+        d.addEdge("rates",e,"tag","ruby","value",6);
+        e.addEdge("rates",a,"tag","java","value",10);
 
-        //query
-        g.V().has("name","marko").out("created").values("name").forEachRemaining(System.out::println);
+        //add Vertex/Edge by traversal
+//        g.addV().property("name","alice").as("a").
+//                addV().property("name","bobby").as("b").
+//                addV().property("name","cindy").as("c").
+//                addV().property("name","david").as("d").
+//                addV().property("name","eliza").as("e").
+//                addE("rates").from("a").to("b").property("tag","ruby").property("value",9).
+//                addE("rates").from("b").to("c").property("tag","ruby").property("value",8).
+//                addE("rates").from("c").to("d").property("tag","ruby").property("value",7).
+//                addE("rates").from("d").to("e").property("tag","ruby").property("value",6).
+//                addE("rates").from("e").to("a").property("tag","java").property("value",10).
+//                iterate();
+
+        //query：类Gremlin 写法 便于在console 调试
+//        g.V().has("name","alice")
+//                .out("rates")
+//                .values("name")
+//                .limit(10)
+//                .forEachRemaining(System.out::println);
+        //拆后便于进行Debug
+        GraphTraversal allV = g.V();
+        GraphTraversal hasName = allV.has("name", "alice");//1. 此处在什么地方过滤
+        GraphTraversal outCreated = hasName.out("rates");//2. 同样下推到什么地方
+        GraphTraversal valueName = outCreated.values("name");
+        GraphTraversal outLimit = valueName.limit(10);
+
+        //gremlin explain()
+//        TraversalExplanation explain = outLimit.explain();
+//        System.out.println(explain.toString());
+//
+//        //gremlin profile()
+//        System.out.println(outLimit.profile());
+
+        //gremlin get result
+        System.out.println(outLimit.next());
+
+
 
         graph.close();
     }
