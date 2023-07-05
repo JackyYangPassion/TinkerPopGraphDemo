@@ -2,6 +2,7 @@ package com.graph.tinkergraph;
 
 import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversal;
 import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversalSource;
+import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.__;
 import org.apache.tinkerpop.gremlin.process.traversal.util.TraversalExplanation;
 import org.apache.tinkerpop.gremlin.process.traversal.util.TraversalMetrics;
 import org.apache.tinkerpop.gremlin.structure.Graph;
@@ -55,24 +56,46 @@ public class Main {
 //                .values("name")
 //                .limit(10)
 //                .forEachRemaining(System.out::println);
-        //拆后便于进行Debug
+        //拆后便于进行Debug ：获取 Alice 一度好友姓名
+        //explain() :get step info
+        //          [TinkerGraphStep(vertex,[name.eq(alice)]),
+        //           VertexStep(OUT,[rates],vertex),
+        //           PropertiesStep([name],value),
+        //           RangeGlobalStep(0,10)]
+//        GraphTraversal allV1 = g.V();
+//        GraphTraversal hasName1 = allV1.has("name", "alice");//1. 此处在什么地方过滤
+//        GraphTraversal outCreated1 = hasName1.out("rates");//2. 同样下推到什么地方
+//        GraphTraversal valueName1 = outCreated1.values("name");
+//        GraphTraversal outLimit1 = valueName1.limit(10);
+//
+//        //gremlin explain()
+////        TraversalExplanation explain = outLimit.explain();
+////        System.out.println(explain.toString());
+////
+////        //gremlin profile()
+////        System.out.println(outLimit.profile());
+//
+//        //gremlin get result
+//        System.out.println(outLimit1.next());
+
+
+
+        //Debug repeat out time(s):获取Alice 两度好友姓名
+        //explain() :get step info
+        //          [TinkerGraphStep(vertex,[name.eq(alice)]),
+        //           VertexStep(OUT,[rates],vertex), NoOpBarrierStep(2500),
+        //           VertexStep(OUT,[rates],vertex), NoOpBarrierStep(2500),
+        //           PropertiesStep([name],value),
+        //           RangeGlobalStep(0,10)]
         GraphTraversal allV = g.V();
         GraphTraversal hasName = allV.has("name", "alice");//1. 此处在什么地方过滤
-        GraphTraversal outCreated = hasName.out("rates");//2. 同样下推到什么地方
+        GraphTraversal outCreated = hasName.repeat(__.out("rates")).times(2);//2. 同样下推到什么地方
         GraphTraversal valueName = outCreated.values("name");
         GraphTraversal outLimit = valueName.limit(10);
-
         //gremlin explain()
 //        TraversalExplanation explain = outLimit.explain();
 //        System.out.println(explain.toString());
-//
-//        //gremlin profile()
-//        System.out.println(outLimit.profile());
-
-        //gremlin get result
         System.out.println(outLimit.next());
-
-
 
         graph.close();
     }

@@ -3,9 +3,9 @@ package com.graph.basicalgostructure;
 public class LinkList {
     //你是一名程序员，请用java 实现双向链表遍历。
     public static void main(String[] args) {
-        LinkList lInkList = new LinkList();
-        Node head = lInkList.createLinkList();
-        lInkList.traverseLinkList(head);
+        LinkList linkList = new LinkList();
+        Node head = linkList.createLinkList();
+        linkList.traverseLinkList(head);
     }
 
     //创建双向链表
@@ -29,6 +29,7 @@ public class LinkList {
             p = p.next;
         }
     }
+
     //请创建Node 类
     class Node {
         private int data;
