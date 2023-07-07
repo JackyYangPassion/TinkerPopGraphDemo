@@ -10,7 +10,6 @@ TinkerPop-Server
 API:java/python
 
 
-//makdown 增加超链接语法
 TinkerPop-Enabled Graph Systems
 1. [HGraphDB](https://github.com/rayokota/hgraphdb)
 2. [TinkerGraph](https://tinkerpop.apache.org/)
