@@ -17,6 +17,7 @@ import org.apache.hugegraph.structure.gremlin.ResultSet;
 
 /**
  * ref https://hugegraph.apache.org/cn/docs/quickstart/hugegraph-client/
+ * HugeGraph 主要是用Http 框架包装了一层
  */
 public class Main {
 
