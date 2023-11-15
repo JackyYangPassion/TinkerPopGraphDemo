@@ -62,11 +62,11 @@ public class Main {
         //           VertexStep(OUT,[rates],vertex),
         //           PropertiesStep([name],value),
         //           RangeGlobalStep(0,10)]
-//        GraphTraversal allV1 = g.V();
-//        GraphTraversal hasName1 = allV1.has("name", "alice");//1. 此处在什么地方过滤
-//        GraphTraversal outCreated1 = hasName1.out("rates");//2. 同样下推到什么地方
-//        GraphTraversal valueName1 = outCreated1.values("name");
-//        GraphTraversal outLimit1 = valueName1.limit(10);
+        GraphTraversal allV1 = g.V();
+        GraphTraversal hasName1 = allV1.has("name", "alice");//1. 此处在什么地方过滤
+        GraphTraversal outCreated1 = hasName1.out("rates");//2. 同样下推到什么地方
+        GraphTraversal valueName1 = outCreated1.values("name");
+        GraphTraversal outLimit1 = valueName1.limit(10);
 //
 //        //gremlin explain()
 ////        TraversalExplanation explain = outLimit.explain();

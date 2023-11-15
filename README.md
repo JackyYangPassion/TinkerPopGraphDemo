@@ -16,6 +16,7 @@ TinkerPop-Enabled Graph Systems
 3. [HugeGraph](https://github.com/apache/incubator-hugegraph)
 4. [JanusGraph](https://janusgraph.org/)
 5. [sqlg](https://github.com/pietermartin/sqlg)
+6. [GraphScope](https://graphscope.io/)
 
 TODO：
 add some other GraphDB
